@@ -27,6 +27,7 @@
 ## <a name="1">セットアップ</a> ##
 
 [RailsBricks入門参照](https://github.com/k2works/rails_bricks_introduction)
+
 [RailsBricks入門(BDD適用編)参照](https://github.com/k2works/rails_bricks_bdd)
 
 # 参照 #
