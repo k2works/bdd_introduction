@@ -21,7 +21,7 @@
 
 # 構成 #
 + [セットアップ](#1)
-
++ [ビヘイビア駆動開発(BDD)とは](#2)
 # 詳細 #
 
 ## <a name="1">セットアップ</a> ##
@@ -29,6 +29,10 @@
 [RailsBricks入門参照](https://github.com/k2works/rails_bricks_introduction)
 
 [RailsBricks入門(BDD適用編)参照](https://github.com/k2works/rails_bricks_bdd)
+
+## <a name="2".ビヘイビア駆動開発(BDD)とは</a> ##
+
+<a href="https://www.flickr.com/photos/k2works/13634941835" title="BDD by Katuyuki Kakigi, on Flickr"><img src="https://farm8.staticflickr.com/7176/13634941835_7bcc39f7f4_n.jpg" width="320" height="310" alt="BDD"></a>
 
 # 参照 #
 
