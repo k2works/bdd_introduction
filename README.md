@@ -33,7 +33,15 @@
 
 ## <a name="2">ビヘイビア駆動開発(BDD)とは</a> ##
 
+テスト駆動開発(TDD)からビヘイビア駆動開発(BDD)へ
+
+<a href="https://www.flickr.com/photos/k2works/13635473944" title="TDD by Katuyuki Kakigi, on Flickr"><img src="https://farm3.staticflickr.com/2938/13635473944_bb1b6b7d38_n.jpg" width="319" height="320" alt="TDD"></a>
+
+TDD概念図
+
 <a href="https://www.flickr.com/photos/k2works/13634941835" title="BDD by Katuyuki Kakigi, on Flickr"><img src="https://farm8.staticflickr.com/7176/13634941835_7bcc39f7f4_n.jpg" width="320" height="310" alt="BDD"></a>
+
+BDD概念図
 
 # 参照 #
 
