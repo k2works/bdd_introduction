@@ -23,6 +23,7 @@
 + [セットアップ](#1)
 + [ビヘイビア駆動開発(BDD)とは](#2)
 + [サンプル実行](#3)
++ [日本語シナリオ](#4)
 
 # 詳細 #
 
@@ -48,7 +49,7 @@ BDD・・・オブジェクトが何をするか。構造ではなく振る舞�
 
 BDD概念図
 
-## <a name="2">サンプル実行</a>
+## <a name="3">サンプル実行</a>
 ### Hello RSpec
 
 spec/greeter_spec.rb
@@ -230,7 +231,6 @@ end
 Then(/^I should see "(.*?)"$/) do |greeting|
   @message.should == greeting
 end
-
 ```
 
 再実行
@@ -281,8 +281,124 @@ Feature: greeter says hello
 0m0.389s
 ```
 
+## 日本語シナリオ
+
+spec/greeter_ja_spec.rb
+
+```ruby
+class RSpecGreeterJa
+  def greet
+    "こんにちはRSpec!"
+  end
+end
+
+describe "RSpecあいさつ" do
+  it "greet()メッセージを受けっとった場合'こんにちはRSpec!'と表示される" do
+    greeter = RSpecGreeterJa.new
+    greeting = greeter.greet
+    expect(greeting).to eq("こんにちはRSpec!")
+  end
+end
+```
+features/greeter_says_hello_ja.feature
+```
+# language: ja
+機能: こんにちはとあいさつする
+
+  RSpec Book読者として
+  こんにちはとあいさつしたい
+  なぜならRSpecとCucumberの学習を始めたいからだ
+
+  シナリオ: こんにちはとあいさつする
+    前提 あいさつする人がいる
+    もし あいさつのメッセージを送った
+    ならば "こんにちはCucumber!"と表示される
+
+```
+features/step_definitions/greeter_steps_ja.rb
+
+```ruby
+class CucumberGreeter
+  def greet_ja
+    "こんにちはCucumber!"
+  end
+end
+
+前提(/^あいさつする人がいる$/) do
+  @greeter = CucumberGreeter.new
+end
+
+もし(/^あいさつのメッセージを送った$/) do
+  @message = @greeter.greet_ja
+end
+
+ならば(/^"(.*?)"と表示される$/) do |greeting|
+  @message.should == greeting
+end
+```
+命令一覧
+```
+$ cucumber --i18n ja
+      | feature          | "フィーチャ", "機能"                                  |
+      | background       | "背景"                                           |
+      | scenario         | "シナリオ"                                         |
+      | scenario_outline | "シナリオアウトライン", "シナリオテンプレート", "テンプレ", "シナリオテンプレ" |
+      | examples         | "例", "サンプル"                                    |
+      | given            | "* ", "前提"                                     |
+      | when             | "* ", "もし"                                     |
+      | then             | "* ", "ならば"                                    |
+      | and              | "* ", "かつ"                                     |
+      | but              | "* ", "しかし", "但し", "ただし"                       |
+      | given (code)     | "前提"                                           |
+      | when (code)      | "もし"                                           |
+      | then (code)      | "ならば"                                          |
+      | and (code)       | "かつ"                                           |
+      | but (code)       | "しかし", "但し", "ただし"                             |
+```
+一括実行
+```
+$ rake
+/Users/k2works/.rvm/rubies/ruby-2.0.0-p247/bin/ruby -S rspec ./spec/greeter_ja_spec.rb ./spec/greeter_spec.rb
+..
+
+Finished in 0.00121 seconds
+2 examples, 0 failures
+/Users/k2works/.rvm/rubies/ruby-2.0.0-p247/bin/ruby -S bundle exec cucumber  --profile default
+Using the default profile...
+Feature: greeter says hello
+
+  In order to start learning RSpec and Cucumber
+  As a reader of The RSpec Book
+  I want a greeter to say Hello
+
+  Scenario: greeter says hello          # features/greeter_says_hello.feature:7
+    Given a greeter                     # features/step_definitions/greeter_steps.rb:7
+    When I send it the greet message    # features/step_definitions/greeter_steps.rb:11
+    Then I should see "Hello Cucumber!" # features/step_definitions/greeter_steps.rb:15
+
+# language: ja
+機能: こんにちはとあいさつする
+
+  RSpec Book読者として
+  こんにちはとあいさつしたい
+  なぜならRSpecとCucumberの学習を始めたいからだ
+
+  シナリオ: こんにちはとあいさつする          # features/greeter_says_hello_ja.feature:8
+    前提あいさつする人がいる              # features/step_definitions/greeter_steps_ja.rb:7
+    もしあいさつのメッセージを送った          # features/step_definitions/greeter_steps_ja.rb:11
+    ならば"こんにちはCucumber!"と表示される # features/step_definitions/greeter_steps_ja.rb:15
+
+2 scenarios (2 passed)
+6 steps (6 passed)
+0m0.391s
+```
+
+
 # 参照 #
 
 [RSpec](https://github.com/rspec)
 
 [Cucumber](http://cukes.info/)
+
+# 参考文献 #
+<iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=k2works0c-22&o=9&p=8&l=as1&asins=4798121932&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
