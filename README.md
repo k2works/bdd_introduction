@@ -24,6 +24,7 @@
 + [セットアップ](#2)
 + [サンプル実行](#3)
 + [日本語シナリオ](#4)
++ [ログインフィーチャの追加](#5)
 
 # 詳細 #
 
@@ -52,7 +53,7 @@ BDD概念図
 ### BDDサイクル  
 1. Cucmberで始める
   1. １つのシナリオに焦点を合わせる
-  1. 失敗するステップ定義を各
+  1. 失敗するステップ定義を書く
   1. RSpecに進む
     1. 失敗するサンプルを書く
     1. サンプルを失敗させる
@@ -155,7 +156,7 @@ end
 ```
 RSpecの実行
 
-```
+```bash
 $ rspec spec/greeter_spec.rb
 F
 
@@ -194,7 +195,7 @@ end
 
 再実行
 
-```
+```bash
 $ rspec spec/greeter_spec.rb
 No examples found.
 
@@ -221,7 +222,7 @@ Feature: greeter says hello
 
 cucumberの実行
 
-```
+```bash
 $ cucumber features
 Using the default profile...
 Feature: greeter says hello
@@ -259,6 +260,7 @@ Then(/^I should see "(.*?)"$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 ```
+
 feature/step_definitions/greeter_steps.rb
 
 ```Ruby
@@ -277,7 +279,7 @@ end
 
 再実行
 
-```
+```bash
 $ cucumber features
 Using the default profile...
 Feature: greeter says hello
@@ -325,7 +327,7 @@ end
 
 再実行
 
-```
+```bash
 $ cucumber features
 Using the default profile...
 Feature: greeter says hello
@@ -346,8 +348,8 @@ Feature: greeter says hello
 
 一括実行
 
-```
-bash-3.2$ rake
+```bash
+$ rake
 /Users/k2works/.rvm/rubies/ruby-2.0.0-p247/bin/ruby -S rspec ./spec/greeter_spec.rb
 .
 
@@ -427,7 +429,7 @@ end
 end
 ```
 命令一覧
-```
+```bash
 $ cucumber --i18n ja
       | feature          | "フィーチャ", "機能"                                  |
       | background       | "背景"                                           |
@@ -446,7 +448,7 @@ $ cucumber --i18n ja
       | but (code)       | "しかし", "但し", "ただし"                             |
 ```
 一括実行
-```
+```bash
 $ rake
 /Users/k2works/.rvm/rubies/ruby-2.0.0-p247/bin/ruby -S rspec ./spec/greeter_ja_spec.rb ./spec/greeter_spec.rb
 ..
@@ -482,13 +484,641 @@ Feature: greeter says hello
 6 steps (6 passed)
 0m0.391s
 ```
+## <a name="5">ログインフィーチャの追加</a>
+### １つのシナリオに焦点を合わせる
+
+_features/login.feature_
+
+#### フィーチャのナラティブ
+```cucumber
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+```
+#### 受け入れ条件
+```cucumber
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオ: 管理ユーザーとしてログインする
+    前提 管理ユーザーの登録が完了している
+    もし 管理ユーザーがログインしたら
+    ならば 管理画面に移動して"Signed in successfully."と表示される
+
+```
+
+### 失敗するステップ定義を書く(Cucumber)
+```bash
+$ cucumber features/login.feature
+Using the default profile...
+# language: ja
+機能: ログイン
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオ: 管理ユーザーとしてログインする                         # features/login.feature:8
+    前提管理ユーザーの登録が完了している                          # features/login.feature:9
+      Undefined step: "管理ユーザーの登録が完了している" (Cucumber::Undefined)
+      features/login.feature:9:in `前提管理ユーザーの登録が完了している'
+    もし管理ユーザーがログインしたら                            # features/login.feature:10
+      Undefined step: "管理ユーザーがログインしたら" (Cucumber::Undefined)
+      features/login.feature:10:in `もし管理ユーザーがログインしたら'
+    ならば管理画面に移動して"Signed in successfully."と表示される # features/login.feature:11
+      Undefined step: "管理画面に移動して"Signed in successfully."と表示される" (Cucumber::Undefined)
+      features/login.feature:11:in `ならば管理画面に移動して"Signed in successfully."と表示される'
+
+1 scenario (1 undefined)
+3 steps (3 undefined)
+0m0.402s
+
+You can implement step definitions for undefined steps with these snippets:
+
+前提(/^管理ユーザーの登録が完了している$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+もし(/^管理ユーザーがログインしたら$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+ならば(/^管理画面に移動して"(.*?)"と表示される$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+```
+### 失敗するサンプルを書く
+_features/step_definitions_  
+ブロックからpendingの呼び出しを削除する
+
+```ruby
+前提(/^管理ユーザーの登録が完了している$/) do
+end
+
+もし(/^管理ユーザーがログインしたら$/) do
+end
+
+ならば(/^管理画面に移動して"(.*?)"と表示される$/) do |message|
+end
+```
+
+```bash
+
+$ cucumber features/login.feature
+Using the default profile...
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオ: 管理ユーザーとしてログインする                         # features/login.feature:8
+    前提管理ユーザーの登録が完了している                          # features/step_definitions/login_steps.rb:1
+    もし管理ユーザーがログインしたら                            # features/step_definitions/login_steps.rb:4
+    ならば管理画面に移動して"Signed in successfully."と表示される # features/step_definitions/login_steps.rb:7
+
+1 scenario (1 passed)
+3 steps (3 passed)
+0m0.404s
+```
+
+ステップファイルを編集する
+
+```ruby
+前提(/^管理ユーザーの登録が完了している$/) do
+end
+
+もし(/^管理ユーザーがログインしたら$/) do
+  visit '/'
+  click_link 'Sign in'
+  fill_in 'Username', with: 'admin'
+  fill_in 'Password', with: '1234'
+  click_button('Sign in')
+end
+
+ならば(/^管理画面に移動して"(.*?)"と表示される$/) do |message|
+  expect(page).to have_content message
+end
+```
+
+ステップファルのデバッグには```save_and_open_page```を使う
+
+```bash
+$ cucumber features/login.feature
+Using the default profile...
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオ: 管理ユーザーとしてログインする                         # features/login.feature:8
+    前提管理ユーザーの登録が完了している                          # features/step_definitions/login_steps.rb:1
+    もし管理ユーザーがログインしたら                            # features/step_definitions/login_steps.rb:4
+    ならば管理画面に移動して"Signed in successfully."と表示される # features/step_definitions/login_steps.rb:12
+      expected to find text "Signed in successfully." in "Toggle navigation Home Sign in × Wrong username/password. Sign in Username Password © 2014 - Yourself! Assembled with RailsBricks" (RSpec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/login_steps.rb:13:in `/^管理画面に移動して"(.*?)"と表示される$/'
+      features/login.feature:11:in `ならば管理画面に移動して"Signed in successfully."と表示される'
+
+Failing Scenarios:
+cucumber features/login.feature:8 # Scenario: 管理ユーザーとしてログインする
+
+1 scenario (1 failed)
+3 steps (1 failed, 2 passed)
+0m0.758s
+```
+### サンプルを失敗させる(Rspec)
+_spec/login_spec.rb_
+正常系
+```ruby
+require 'spec_helper'
+
+  describe User do
+    context "正常系" do
+
+      it "管理ユーザーが正しいパスワードでログインする" do
+
+        params = Hash.new
+        params[:username] = 'admin'
+        params[:password] = '1234'
+
+        user = User.where(username: params[:username].strip).first
+        ret = user.authenticate(params[:password])
+        expect(ret).not_to eq(nil)
+      end
+
+    end
+
+    context "例外系" do
+    end
+  end
+end
+```
+
+```bash
+$ rspec spec/login_spec.rb
+F
+
+Failures:
+
+  1) User 正常系 管理ユーザーが正しいパスワードでログインする
+     Failure/Error: ret = user.authenticate(params[:password])
+     NoMethodError:
+       undefined method `authenticate' for nil:NilClass
+     # ./spec/login_spec.rb:13:in `block (3 levels) in <top (required)>'
+
+Finished in 0.00671 seconds
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/login_spec.rb:6 # User 正常系 管理ユーザーでログインする
+
+Randomized with seed 9916
+```
+_spec/factories.rb_
+
+```ruby
+FactoryGirl.define do
+  factory :user do
+    username 'admin'
+    email 'admin@example.com'
+    password '1234'
+    password_confirmation '1234'
+    admin true
+  end
+end
+
+```
 
 
+```ruby
+require 'spec_helper'
+
+describe User do
+  context "正常系" do
+
+    it "管理ユーザーが正しいパスワードでログインする" do
+      FactoryGirl.create(:user)
+      params = Hash.new
+      params[:username] = 'admin'
+      params[:password] = '1234'
+
+      user = User.where(username: params[:username].strip).first
+      ret = user.authenticate(params[:password])
+      expect(ret).not_to eq(nil)
+    end
+
+  end
+
+  context "例外系" do
+  end
+end
+
+```
+```bash
+$ rspec spec/login_spec.rb
+.
+
+Finished in 0.22209 seconds
+1 example, 0 failures
+
+Randomized with seed 53624
+```
+
+例外系
+
+```ruby
+require 'spec_helper'
+
+describe User do
+  context "正常系" do
+
+    it "管理ユーザーが正しいパスワードでログインする" do
+      FactoryGirl.create(:user)
+      params = Hash.new
+      params[:username] = 'admin'
+      params[:password] = '1234'
+
+      user = User.where(username: params[:username].strip).first
+      ret = user.authenticate(params[:password])
+      expect(ret).not_to eq(nil)
+    end
+
+  end
+
+  context "例外系" do
+
+    it "管理ユーザーで間違ったパスワードでログインする" do
+      FactoryGirl.create(:user)
+      params = Hash.new
+      params[:username] = 'admin'
+      params[:password] = '1234'
+
+      user = User.where(username: params[:username].strip).first
+      ret = user.authenticate(params[:password])
+      expect(ret).to eq(false)
+    end
+
+  end
+end
+```
+
+```bash
+ rspec spec/login_spec.rb
+.F
+
+Failures:
+
+  1) User 例外系 管理ユーザーで間違ったパスワードでログインする
+     Failure/Error: expect(ret).to eq(false)
+
+       expected: false
+            got: #<User id: 1, username: "admin", email: "admin@example.com", password_digest: "$2a$04$noieAqxsU70p0AiKYqJRR.gKYnYq3ZfAX1Tz0JYBYRHf...", admin: true, slug: "user-admin", created_at: "2014-04-08 09:16:34", updated_at: "2014-04-08 09:16:34">
+
+       (compared using ==)
+     # ./spec/login_spec.rb:29:in `block (3 levels) in <top (required)>'
+
+Finished in 0.27748 seconds
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/login_spec.rb:21 # User 例外系 管理ユーザーで間違ったパスワードでログインする
+
+Randomized with seed 35870
+```
+
+```ruby
+require 'spec_helper'
+
+describe User do
+  context "正常系" do
+
+    it "管理ユーザーが正しいパスワードでログインする" do
+      FactoryGirl.create(:user)
+      params = Hash.new
+      params[:username] = 'admin'
+      params[:password] = '1234'
+
+      user = User.where(username: params[:username].strip).first
+      ret = user.authenticate(params[:password])
+      expect(ret).not_to eq(nil)
+    end
+
+  end
+
+  context "例外系" do
+
+    it "管理ユーザーが間違ったパスワードでログインする" do
+      FactoryGirl.create(:user)
+      params = Hash.new
+      params[:username] = 'admin'
+      params[:password] = '0000'
+
+      user = User.where(username: params[:username].strip).first
+      ret = user.authenticate(params[:password])
+      expect(ret).to eq(false)
+    end
+
+  end
+end
+```
+
+```bash
+$ rspec spec/login_spec.rb
+..
+
+Finished in 0.23543 seconds
+2 examples, 0 failures
+
+Randomized with seed 45369
+```
+### リファクタリング(Rspec)
+
+```ruby
+require 'spec_helper'
+
+describe User do
+  before(:each) do
+    FactoryGirl.create(:user)
+    @params = Hash.new
+  end
+
+  context "正常系" do
+
+    it "管理ユーザーが正しいパスワードでログインする" do
+      @params[:username] = 'admin'
+      @params[:password] = '1234'
+
+      user = User.where(username: @params[:username].strip).first
+      ret = user.authenticate(@params[:password])
+      expect(ret).not_to eq(nil)
+    end
+
+  end
+
+  context "例外系" do
+
+    it "管理ユーザーが間違ったパスワードでログインする" do
+      @params[:username] = 'admin'
+      @params[:password] = '0000'
+
+      user = User.where(username: @params[:username].strip).first
+      ret = user.authenticate(@params[:password])
+      expect(ret).to eq(false)
+    end
+
+  end
+end
+```
+
+```bash
+$ rspec spec/login_spec.rb
+..
+
+Finished in 0.30719 seconds
+2 examples, 0 failures
+
+Randomized with seed 64622
+```
+### リファクタリング(Cucumber)
+
+```ruby
+前提(/^管理ユーザーの登録が完了している$/) do
+  FactoryGirl.create(:user)
+end
+
+もし(/^管理ユーザーがログインしたら$/) do
+  visit '/'
+  click_link 'Sign in'
+  fill_in 'Username', with: 'admin'
+  fill_in 'Password', with: '1234'
+  click_button('Sign in')
+end
+
+ならば(/^管理画面に移動して"(.*?)"と表示される$/) do |message|
+  expect(page).to have_content message
+end
+```
+
+```bash
+$ cucumber features/login.feature
+Using the default profile...
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオ: 管理ユーザーとしてログインする                         # features/login.feature:8
+    前提管理ユーザーの登録が完了している                          # features/step_definitions/login_steps.rb:1
+    もし管理ユーザーがログインしたら                            # features/step_definitions/login_steps.rb:5
+    ならば管理画面に移動して"Signed in successfully."と表示される # features/step_definitions/login_steps.rb:13
+
+1 scenario (1 passed)
+3 steps (3 passed)
+0m0.959s
+```
+
+```
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオアウトライン: 管理ユーザーとしてログインする
+    前提 "<管理ユーザー>"の登録が完了している
+    もし "<管理ユーザー>"が"<パスワード>"を使ってログインしたら
+    ならば 管理画面に移動して"<画面メッセージ>"と表示される
+
+    例: 管理ユーザーがログインする
+      | 管理ユーザー | パスワード | 画面メッセージ |
+      | admin      | 1234    | Signed in successfully. |
+      | admin      | 0000    | Wrong username/password. |
+
+    例: 管理ユーザー以外がログインする
+      | 管理ユーザー | パスワード | 画面メッセージ |
+      | not_admin      | 1234    | Wrong username/password.|
+      | not_admin      | 0000    | Wrong username/password. |
+
+```
+
+```bash
+$ cucumber features/login.feature
+Using the default profile...
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオアウトライン: 管理ユーザーとしてログインする         # features/login.feature:8
+    前提"<管理ユーザー>"の登録が完了している            # features/login.feature:9
+    もし"<管理ユーザー>"が"<パスワード>"を使ってログインしたら # features/login.feature:10
+    ならば管理画面に移動して"<画面メッセージ>"と表示される     # features/step_definitions/login_steps.rb:13
+
+    例: 管理ユーザーがログインする
+      | 管理ユーザー | パスワード | 画面メッセージ                  |
+      | admin  | 1234  | Signed in successfully.  |
+      Undefined step: ""admin"の登録が完了している" (Cucumber::Undefined)
+      features/login.feature:9:in `前提"<管理ユーザー>"の登録が完了している'
+      | admin  | 0000  | Wrong username/password. |
+      Undefined step: ""admin"の登録が完了している" (Cucumber::Undefined)
+      features/login.feature:9:in `前提"<管理ユーザー>"の登録が完了している'
+
+    例: 管理ユーザー以外がログインする
+      | 管理ユーザー    | パスワード | 画面メッセージ                  |
+      | not_admin | 1234  | Wrong username/password. |
+      Undefined step: ""not_admin"の登録が完了している" (Cucumber::Undefined)
+      features/login.feature:9:in `前提"<管理ユーザー>"の登録が完了している'
+      | not_admin | 0000  | Wrong username/password. |
+      Undefined step: ""not_admin"の登録が完了している" (Cucumber::Undefined)
+      features/login.feature:9:in `前提"<管理ユーザー>"の登録が完了している'
+
+4 scenarios (4 undefined)
+12 steps (4 skipped, 8 undefined)
+0m0.459s
+
+You can implement step definitions for undefined steps with these snippets:
+
+前提(/^"(.*?)"の登録が完了している$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+もし(/^"(.*?)"が"(.*?)"を使ってログインしたら$/) do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+```
+
+```ruby
+前提(/^"(.*?)"の登録が完了している$/) do |user|
+  if user == "admin"
+    FactoryGirl.create(:user)
+  end
+end
+
+もし(/^"(.*?)"が"(.*?)"を使ってログインしたら$/) do |user, pass|
+  visit '/'
+  click_link 'Sign in'
+  fill_in 'Username', with: user
+  fill_in 'Password', with: pass
+  click_button('Sign in')
+end
+
+ならば(/^管理画面に移動して"(.*?)"と表示される$/) do |message|
+  expect(page).to have_content message
+end
+```
+
+```bash
+$ cucumber features/login.feature
+Using the default profile...
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオアウトライン: 管理ユーザーとしてログインする         # features/login.feature:8
+    前提"<管理ユーザー>"の登録が完了している            # features/step_definitions/login_steps.rb:1
+    もし"<管理ユーザー>"が"<パスワード>"を使ってログインしたら # features/step_definitions/login_steps.rb:7
+    ならば管理画面に移動して"<画面メッセージ>"と表示される     # features/step_definitions/login_steps.rb:15
+
+    例: 管理ユーザーがログインする
+      | 管理ユーザー | パスワード | 画面メッセージ                  |
+      | admin  | 1234  | Signed in successfully.  |
+      | admin  | 0000  | Wrong username/password. |
+
+    例: 管理ユーザー以外がログインする
+      | 管理ユーザー    | パスワード | 画面メッセージ                  |
+      | not_admin | 1234  | Wrong username/password. |
+      | not_admin | 0000  | Wrong username/password. |
+
+4 scenarios (4 passed)
+12 steps (12 passed)
+0m1.164s
+```
+
+```bash
+$ rake
+/Users/k2works/.rvm/rubies/ruby-2.0.0-p247/bin/ruby -S rspec ./spec/greeter_ja_spec.rb ./spec/greeter_spec.rb ./spec/login_spec.rb
+....
+
+Finished in 0.20415 seconds
+4 examples, 0 failures
+
+Randomized with seed 33900
+
+/Users/k2works/.rvm/rubies/ruby-2.0.0-p247/bin/ruby -S bundle exec cucumber  --profile default
+Using the default profile...
+Feature: greeter says hello
+
+  In order to start learning RSpec and Cucumber
+  As a reader of The RSpec Book
+  I want a greeter to say Hello
+
+  Scenario: greeter says hello          # features/greeter_says_hello.feature:7
+    Given a greeter                     # features/step_definitions/greeter_steps.rb:7
+    When I send it the greet message    # features/step_definitions/greeter_steps.rb:11
+    Then I should see "Hello Cucumber!" # features/step_definitions/greeter_steps.rb:15
+
+# language: ja
+機能: こんにちはとあいさつする
+
+  RSpec Book読者として
+  こんにちはとあいさつしたい
+  なぜならRSpecとCucumberの学習を始めたいからだ
+
+  シナリオ: こんにちはとあいさつする          # features/greeter_says_hello_ja.feature:8
+    前提あいさつする人がいる              # features/step_definitions/greeter_steps_ja.rb:7
+    もしあいさつのメッセージを送った          # features/step_definitions/greeter_steps_ja.rb:11
+    ならば"こんにちはCucumber!"と表示される # features/step_definitions/greeter_steps_ja.rb:15
+
+# language: ja
+機能: ログイン
+
+  管理ユーザーとして
+  ログインしたい
+  なぜなら管理ユーザーだけに許可された作業をするためだ
+
+  シナリオアウトライン: 管理ユーザーとしてログインする         # features/login.feature:8
+    前提"<管理ユーザー>"の登録が完了している            # features/step_definitions/login_steps.rb:1
+    もし"<管理ユーザー>"が"<パスワード>"を使ってログインしたら # features/step_definitions/login_steps.rb:7
+    ならば管理画面に移動して"<画面メッセージ>"と表示される     # features/step_definitions/login_steps.rb:15
+
+    例: 管理ユーザーがログインする
+      | 管理ユーザー | パスワード | 画面メッセージ                  |
+      | admin  | 1234  | Signed in successfully.  |
+      | admin  | 0000  | Wrong username/password. |
+
+    例: 管理ユーザー以外がログインする
+      | 管理ユーザー    | パスワード | 画面メッセージ                  |
+      | not_admin | 1234  | Wrong username/password. |
+      | not_admin | 0000  | Wrong username/password. |
+
+6 scenarios (6 passed)
+18 steps (18 passed)
+0m1.351s
+```
 # 参照 #
 
-[RSpec](https://github.com/rspec)
-
-[Cucumber](http://cukes.info/)
+[RSpec](https://github.com/rspec)  
+[Cucumber](http://cukes.info/)  
+[thoughtbot / factory_girl](https://github.com/thoughtbot/factory_girl)  
 
 # 参考文献 #
 <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=k2works0c-22&o=9&p=8&l=as1&asins=4798121932&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
