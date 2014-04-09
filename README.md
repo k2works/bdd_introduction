@@ -569,9 +569,9 @@ end
 ならば(/^管理画面に移動して"(.*?)"と表示される$/) do |message|
 end
 ```
+cucumberを実行して正常に動作するか確認する
 
 ```bash
-
 $ cucumber features/login.feature
 Using the default profile...
 # language: ja
@@ -591,8 +591,8 @@ Using the default profile...
 0m0.404s
 ```
 
-ステップファイルを編集する
-
+テストを失敗させるためステップファイルを編集する  
+ステップファルのデバッグには```save_and_open_page```を使う
 ```ruby
 前提(/^管理ユーザーの登録が完了している$/) do
 end
@@ -609,8 +609,7 @@ end
   expect(page).to have_content message
 end
 ```
-
-ステップファルのデバッグには```save_and_open_page```を使う
+cucumberを実行してテストが失敗するか確認する
 
 ```bash
 $ cucumber features/login.feature
@@ -638,7 +637,8 @@ cucumber features/login.feature:8 # Scenario: 管理ユーザーとしてログ�
 0m0.758s
 ```
 ### サンプルを失敗させる(Rspec)
-_spec/login_spec.rb_
+失敗する正常系のテスケースを作成する  
+_spec/login_spec.rb_  
 正常系
 ```ruby
 require 'spec_helper'
@@ -665,6 +665,8 @@ require 'spec_helper'
 end
 ```
 
+RSpecを実行してテストが失敗することを確認する
+
 ```bash
 $ rspec spec/login_spec.rb
 F
@@ -686,6 +688,7 @@ rspec ./spec/login_spec.rb:6 # User 正常系 管理ユーザーでログイン�
 
 Randomized with seed 9916
 ```
+テストを成功させるためのダミーデータをFactoryGirlで作成する  
 _spec/factories.rb_
 
 ```ruby
@@ -700,7 +703,7 @@ FactoryGirl.define do
 end
 
 ```
-
+ダミーデータを登録するようにテストを修正する
 
 ```ruby
 require 'spec_helper'
@@ -726,6 +729,7 @@ describe User do
 end
 
 ```
+テストが成功することを確認する
 ```bash
 $ rspec spec/login_spec.rb
 .
@@ -735,7 +739,7 @@ Finished in 0.22209 seconds
 
 Randomized with seed 53624
 ```
-
+続いて例外系のテストケースを作成する  
 例外系
 
 ```ruby
@@ -773,7 +777,7 @@ describe User do
   end
 end
 ```
-
+まず、テストを失敗させる
 ```bash
  rspec spec/login_spec.rb
 .F
@@ -798,7 +802,7 @@ rspec ./spec/login_spec.rb:21 # User 例外系 管理ユーザーで間違った
 
 Randomized with seed 35870
 ```
-
+続いてテストを成功させるためテストコード編集する
 ```ruby
 require 'spec_helper'
 
@@ -834,7 +838,7 @@ describe User do
   end
 end
 ```
-
+テストが成功することを確認する
 ```bash
 $ rspec spec/login_spec.rb
 ..
@@ -845,7 +849,7 @@ Finished in 0.23543 seconds
 Randomized with seed 45369
 ```
 ### リファクタリング(Rspec)
-
+コードの中で重複している部分が存在するので重複をなくしパラメータ変数をオブジェクト変数に変更する
 ```ruby
 require 'spec_helper'
 
@@ -882,7 +886,7 @@ describe User do
   end
 end
 ```
-
+テストを再実行して壊れていないか確認する
 ```bash
 $ rspec spec/login_spec.rb
 ..
@@ -893,7 +897,7 @@ Finished in 0.30719 seconds
 Randomized with seed 64622
 ```
 ### リファクタリング(Cucumber)
-
+テストを成功させるためダミーデータを作成する
 ```ruby
 前提(/^管理ユーザーの登録が完了している$/) do
   FactoryGirl.create(:user)
@@ -911,7 +915,7 @@ end
   expect(page).to have_content message
 end
 ```
-
+テストが成功することを確認する
 ```bash
 $ cucumber features/login.feature
 Using the default profile...
@@ -931,7 +935,7 @@ Using the default profile...
 3 steps (3 passed)
 0m0.959s
 ```
-
+成功することを確認したら複数のテストケースに対応できるように変更する
 ```
 # language: ja
 機能: ログイン
@@ -956,7 +960,7 @@ Using the default profile...
       | not_admin      | 0000    | Wrong username/password. |
 
 ```
-
+Cucumberを実行して必要なテストコードを追加する
 ```bash
 $ cucumber features/login.feature
 Using the default profile...
@@ -1004,7 +1008,7 @@ end
   pending # express the regexp above with the code you wish you had
 end
 ```
-
+外部からのパラメータでログイン操作を制御できるようにする
 ```ruby
 前提(/^"(.*?)"の登録が完了している$/) do |user|
   if user == "admin"
@@ -1024,7 +1028,7 @@ end
   expect(page).to have_content message
 end
 ```
-
+変更後テストが成功することを確認する
 ```bash
 $ cucumber features/login.feature
 Using the default profile...
@@ -1054,7 +1058,7 @@ Using the default profile...
 12 steps (12 passed)
 0m1.164s
 ```
-
+最後にこれまで作成したテストケースを一括実行して失敗がないか確認する
 ```bash
 $ rake
 /Users/k2works/.rvm/rubies/ruby-2.0.0-p247/bin/ruby -S rspec ./spec/greeter_ja_spec.rb ./spec/greeter_spec.rb ./spec/login_spec.rb
