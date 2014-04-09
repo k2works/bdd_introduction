@@ -105,6 +105,8 @@ BDDのもっとも重要な特徴の１つはシナリオを自動化するの�
 
 >『The RSpec Book』
 
+<a href="https://www.flickr.com/photos/k2works/13735080623" title="BDD_01 by Katuyuki Kakigi, on Flickr"><img src="https://farm4.staticflickr.com/3743/13735080623_1f7a591b55.jpg" width="500" height="188" alt="BDD_01"></a>
+
 ### ストーリーの構造
 + タイトル  
   どのストーリーについて説明するのかを明確にする。
