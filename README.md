@@ -1,3 +1,5 @@
+[![Hack k2works/bdd_introduction on Nitrous.IO](https://d3o0mnbgv6k92a.cloudfront.net/assets/hack-s-v1-7475db0cf93fe5d1e29420c928ebc614.png)](https://www.nitrous.io/hack_button?source=embed&runtime=rails&repo=k2works%2Fbdd_introduction&file_to_open=nitrous.txt)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/k2works/bdd_introduction/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 ビヘイビア駆動開発入門
 ===================
 
@@ -1129,6 +1131,6 @@ Feature: greeter says hello
 # 参考文献 #
 <iframe src="http://rcm-fe.amazon-adsystem.com/e/cm?t=k2works0c-22&o=9&p=8&l=as1&asins=4798121932&ref=qf_sp_asin_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
 
+[NITROUS.IO](https://www.nitrous.io/)
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/k2works/bdd_introduction/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
+[Introducing the Nitrous.IO Hack Button: Bring Your Code to Life](http://blog.nitrous.io/2014/04/16/nitrousio-hack-button.html)

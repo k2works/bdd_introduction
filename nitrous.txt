@@ -1,0 +1,30 @@
+注意
+============================================
+
+もしNitrous.io開発環境でファイル表示しているならば...
+
+Nitrous.io環境のRubyを2.0.0にしなければなりません。
+
+詳しくは'Ruby on Rails with Nitrous.io'の記事を参照してください：
+http://railsapps.github.io/rubyonrails-nitrous-io.html
+
+アプリケーションを起動するのにコンソールを使ってください:
+
+$ cd workspace
+$ cd bdd-instroduction
+$ bundle install
+$ rails server
+
+メニューから'Previw'を選んでアプリケーションが動作しているか確認してください。
+
+________________________
+
+Nitrous.io is a hosted development environment:
+Nitrous.ioは開発環境のホスティングサービスです:
+https://www.nitrous.io/
+
+For more information, see the article 'Ruby on Rails with Nitrous.io':
+詳しくは、'Ruby on Rails with Nitrous.io'の記事を参照してください:
+http://railsapps.github.io/rubyonrails-nitrous-io.html
+
+________________________
