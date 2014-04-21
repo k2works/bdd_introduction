@@ -1,0 +1,2 @@
+--charset UTF-8
+"{lib,app,features}/**/*.{rb,feature}" --plugin yard-cucumber

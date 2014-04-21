@@ -68,6 +68,16 @@ group :test do
   gem "guard-cucumber"
 end
 
+# Yard
+group :test, :development do
+  gem 'yard', :require => false
+  gem 'yard-cucumber', :require => false
+  gem 'redcarpet'
+  gem 'guard-yard'
+  gem 'guard-ctags-bundler'
+  gem 'yard-rails-plugin', :git => 'https://github.com/ogeidix/yard-rails-plugin.git', :tag => 'v0.0.1'  
+end
+
 # Unicoron
 gem "unicorn"
 
