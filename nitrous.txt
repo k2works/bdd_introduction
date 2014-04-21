@@ -11,11 +11,22 @@ http://railsapps.github.io/rubyonrails-nitrous-io.html
 アプリケーションを起動するのにコンソールを使ってください:
 
 $ cd workspace
-$ cd bdd-instroduction
+$ cd bdd_introduction
 $ bundle install
-$ rails server
+$ gem update rake
+$ rake db:migrate
+$ rake db:seed
+$ rake db:test:prepare
+$ foreman start
 
-メニューから'Previw'を選んでアプリケーションが動作しているか確認してください。
+メニューから'Previw'のPort3000を選んでアプリケーションが動作しているか確認してください。
+
+ログイン
+Username:admin
+Password:1234
+
+Port8808でドキュメントが表示されます。
+文字化けしている場合はエンコードをUnicode(UTF-8)に指定する。
 
 ________________________
 
