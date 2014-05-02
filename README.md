@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/k2works/bdd_introduction.svg?branch=master)](https://travis-ci.org/k2works/bdd_introduction)
 [![Hack k2works/bdd_introduction on Nitrous.IO](https://d3o0mnbgv6k92a.cloudfront.net/assets/hack-s-v1-7475db0cf93fe5d1e29420c928ebc614.png)](https://www.nitrous.io/hack_button?source=embed&runtime=rails&repo=k2works%2Fbdd_introduction&file_to_open=nitrous.txt)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/k2works/bdd_introduction/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 ビヘイビア駆動開発入門
@@ -1128,6 +1129,16 @@ Feature: greeter says hello
 ### Travis対応
 
 _.travis.yml_追加
+```yml
+language: ruby
+rvm:
+  - "2.0.0"
+script:
+  - bundle exec rake db:migrate
+  - bundle exec rake db:test:prepare
+  - bundle exec rspec
+  - bundle exec cucumber
+```
 
 # 参照 #
 
