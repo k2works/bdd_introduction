@@ -27,6 +27,7 @@
 + [サンプル実行](#3)
 + [日本語シナリオ](#4)
 + [ログインフィーチャの追加](#5)
++ [CI環境構築](#6)
 
 # 詳細 #
 
@@ -1122,6 +1123,12 @@ Feature: greeter says hello
 18 steps (18 passed)
 0m1.351s
 ```
+## <a name="6">CI環境構築</a>
+
+### Travis対応
+
+_.travis.yml_追加
+
 # 参照 #
 
 [RSpec](https://github.com/rspec)  
